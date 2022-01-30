@@ -1,4 +1,5 @@
 bin/
 lib/
+build/
 .classpath
 .project
