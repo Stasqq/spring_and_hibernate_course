@@ -8,6 +8,6 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
 	<!-- add entry to enable component scanning -->
 	<context:component-scan base-package="org.czobot.springdemo"/>
 	
-	<context:property-placeholder location="classpath:sport.properties"/>
+	<context:property-placeholder location="classpath:config.properties"/>
 
 </beans>

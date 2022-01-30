@@ -1,10 +1,15 @@
 package org.czobot.springdemo;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 @Component
+@Scope("singleton")
 public class TennisCoach implements Coach {
 
 	private FortuneService fortuneService;
@@ -18,6 +23,16 @@ public class TennisCoach implements Coach {
 //	public TennisCoach(@Qualifier("happyFortuneService")FortuneService fortuneService) {
 //		this.fortuneService = fortuneService;
 //	}
+	
+	@PostConstruct
+	private void initMethod() {
+		System.out.println("TennisCoach: initMethod");
+	}
+	
+	@PreDestroy
+	private void destroyMethod() {
+		System.out.println("TennisCoach: destroyMethod");
+	}
 	
 	@Override
 	public String getDailyWorkout() {
