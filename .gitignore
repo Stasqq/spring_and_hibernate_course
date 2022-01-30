@@ -3,3 +3,4 @@ lib/
 build/
 .classpath
 .project
+.settings/
