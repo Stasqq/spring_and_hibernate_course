@@ -4,10 +4,12 @@
 
 <!DOCTYPE html>
 <html>
+
 <head>
-<meta charset="UTF-8">
-<title>Student Registration Form</title>
+	<meta charset="UTF-8">
+	<title>Student Registration Form</title>
 </head>
+
 <body>
 
 	<form:form action="processForm" modelAttribute="student">

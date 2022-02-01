@@ -4,10 +4,12 @@
 
 <!DOCTYPE html>
 <html>
+
 <head>
-<meta charset="UTF-8">
-<title>Student Confirmation</title>
+	<meta charset="UTF-8">
+	<title>Student Confirmation</title>
 </head>
+
 <body>
 
 Student is confirmed: ${student.firstName} ${student.lastName}
