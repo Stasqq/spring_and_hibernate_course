@@ -1,14 +1,14 @@
 package org.czobot.hibernate.demo;
 
-import org.czobot.hibernate.demo.entity.Course;
-import org.czobot.hibernate.demo.entity.Instructor;
-import org.czobot.hibernate.demo.entity.InstructorDetail;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
-import org.hibernate.query.Query;
+import org.czobot.hibernate.demo.entity.Course;
+import org.czobot.hibernate.demo.entity.Instructor;
+import org.czobot.hibernate.demo.entity.InstructorDetail;
+import org.czobot.hibernate.demo.entity.Student;
 
-public class FetchJoinDemo {
+public class GetInstructorCoursesDemo {
 
 	public static void main(String[] args) {
 		
@@ -27,32 +27,18 @@ public class FetchJoinDemo {
 			// start a transaction
 			session.beginTransaction();
 			
-			// hibernate query with HQL
-			
+			// get the instructor form db
 			int instructorId = 1;
-			
-			Query<Instructor> query =
-					session.createQuery("select i from Instructor i "
-							+ "JOIN FETCH i.courses "
-							+ "where i.id =: theInstructorId",
-					Instructor.class);
-			
-			query.setParameter("theInstructorId", instructorId);
-			
-			// execute query and get the instuctor
-			Instructor instructor = query.getSingleResult();
+			Instructor instructor = session.get(Instructor.class, instructorId);
 			
 			System.out.println("Instructor: " + instructor);
 			
+			// get courses for the instructor
+			
+			System.out.println("Courses: " + instructor.getCourses());
+			
 			// commit transaction
 			session.getTransaction().commit();
-
-			// close the session
-			System.out.println("Closing session");
-			session.close();
-			
-			// get courses for the instructor
-			System.out.println("Courses: " + instructor.getCourses());
 			
 			System.out.println("Done!");
 		}
