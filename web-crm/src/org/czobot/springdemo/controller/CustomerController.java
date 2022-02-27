@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.czobot.springdemo.entity.Customer;
 import org.czobot.springdemo.service.CustomerService;
+import org.czobot.springdemo.util.SortUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,10 +23,20 @@ public class CustomerController {
 	private CustomerService customerService;
 	
 	@GetMapping("/list")
-	public String listCustomers(Model model) {
+	public String listCustomers(Model model, @RequestParam(required=false) String sort) {
 		
-		// get customers from the dao
-		List<Customer> customers = customerService.getCustomers();
+		// get customers from the service
+		List<Customer> customers = null;
+		
+		// check for sort field
+		if (sort != null) {
+			int sortField = Integer.parseInt(sort);
+			customers = customerService.getCustomers(sortField);			
+		}
+		else {
+			// no sort field provided ... default to sorting by last name
+			customers = customerService.getCustomers(SortUtils.LAST_NAME);
+		}
 		
 		// add the customers to the model
 		model.addAttribute("customers", customers);
@@ -73,5 +84,16 @@ public class CustomerController {
 		customerService.deleteCustomer(customerId);
 
 		return "redirect:/customer/list";
+	}
+	
+	@GetMapping("/search")
+	public String searchCustomer(@RequestParam("searchName") String searchName, Model model) {
+		
+		// search customers from service
+		List<Customer> customers = customerService.searchCustomers(searchName);
+		
+		model.addAttribute("customers", customers);
+		
+		return "list-customers";
 	}
 }
